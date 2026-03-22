@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 36 33% 95%;
+    --foreground: 20 18% 16%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 20 18% 16%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 18% 16%;
+
+    --primary: 162 45% 33%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 36 20% 90%;
+    --secondary-foreground: 20 18% 16%;
+
+    --muted: 36 15% 88%;
+    --muted-foreground: 20 10% 40%;
+
+    --accent: 40 90% 60%;
+    --accent-foreground: 20 18% 16%;
+
+    --destructive: 355 72% 56%;
+    --destructive-foreground: 0 0% 100%;
+
+    --emergency: 355 72% 56%;
+    --emergency-foreground: 0 0% 100%;
+    --emergency-bg: 355 60% 95%;
+
+    --community: 210 50% 42%;
+    --community-bg: 210 35% 93%;
+
+    --events: 162 40% 33%;
+    --events-bg: 162 28% 92%;
+
+    --skills: 270 35% 48%;
+    --skills-bg: 270 25% 93%;
+
+    --help: 40 85% 50%;
+    --help-bg: 40 50% 93%;
+
+    --border: 36 15% 82%;
+    --input: 36 15% 82%;
+    --ring: 162 45% 33%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 20 18% 20%;
+    --sidebar-primary: 162 45% 33%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 36 20% 93%;
+    --sidebar-accent-foreground: 20 18% 16%;
+    --sidebar-border: 36 15% 85%;
+    --sidebar-ring: 162 45% 33%;
+  }
+
+  .dark {
+    --background: 220 20% 10%;
+    --foreground: 36 20% 90%;
+
+    --card: 220 18% 14%;
+    --card-foreground: 36 20% 90%;
+
+    --popover: 220 18% 14%;
+    --popover-foreground: 36 20% 90%;
+
+    --primary: 162 45% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 15% 20%;
+    --secondary-foreground: 36 20% 90%;
+
+    --muted: 220 12% 22%;
+    --muted-foreground: 36 10% 60%;
+
+    --accent: 40 80% 55%;
+    --accent-foreground: 20 18% 10%;
+
+    --destructive: 355 65% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --emergency: 355 65% 50%;
+    --emergency-foreground: 0 0% 100%;
+    --emergency-bg: 355 40% 18%;
+
+    --community: 210 45% 55%;
+    --community-bg: 210 30% 18%;
+
+    --events: 162 40% 42%;
+    --events-bg: 162 25% 16%;
+
+    --skills: 270 35% 60%;
+    --skills-bg: 270 20% 18%;
+
+    --help: 40 75% 55%;
+    --help-bg: 40 40% 16%;
+
+    --border: 220 12% 22%;
+    --input: 220 12% 22%;
+    --ring: 162 45% 42%;
+
+    --sidebar-background: 220 18% 12%;
+    --sidebar-foreground: 36 20% 85%;
+    --sidebar-primary: 162 45% 42%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 18%;
+    --sidebar-accent-foreground: 36 20% 90%;
+    --sidebar-border: 220 12% 20%;
+    --sidebar-ring: 162 45% 42%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border transition-colors duration-200;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Nunito', sans-serif;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
