@@ -6,6 +6,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
 import { notifyFamilyCheckin } from "@/lib/notifications";
 import ReadAloudButton from "@/components/ReadAloudButton";
+import NotificationContent from "@/components/NotificationContent";
 import { useCommunity } from "@/hooks/use-community";
 
 interface Notification {
@@ -162,11 +163,16 @@ const Dashboard = () => {
               <div key={n.id} className={`rounded-lg border border-border p-4 flex items-start gap-3 ${!n.read ? "bg-primary/5" : "bg-card"}`}>
                 <span className="text-lg shrink-0">{typeEmoji[n.type] || "🔔"}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-senior-sm font-bold">{n.title}</p>
-                  <p className="text-senior-sm text-muted-foreground">{n.message}</p>
+                  <div className="flex gap-2">
+                    <NotificationContent
+                      title={n.title}
+                      message={n.message}
+                      readAloudSize={16}
+                      translateSize={16}
+                    />
+                  </div>
                   <p className="text-xs text-muted-foreground mt-1">{timeAgo(n.created_at)}</p>
                 </div>
-                <ReadAloudButton text={`${n.title}. ${n.message}`} size={16} />
               </div>
             ))}
           </div>

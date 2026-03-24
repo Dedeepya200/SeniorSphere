@@ -6,6 +6,7 @@ import { User, Activity, Clock, Bell, AlertTriangle, UserPlus, Search, CheckCirc
 import { toast } from "sonner";
 import ReadAloudButton from "@/components/ReadAloudButton";
 import VoiceInputButton from "@/components/VoiceInputButton";
+import NotificationContent from "@/components/NotificationContent";
 import { sendNotification } from "@/lib/notifications";
 
 interface SeniorProfile {
@@ -583,11 +584,16 @@ const FamilyDashboard = () => {
               <div key={n.id} className={`rounded-lg border border-border p-3 flex items-start gap-3 ${!n.read ? "bg-primary/5" : ""}`}>
                 <span className="text-lg shrink-0">{typeEmoji[n.type] || "🔔"}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-senior-sm font-bold">{n.title}</p>
-                  <p className="text-senior-sm text-muted-foreground">{n.message}</p>
+                  <div className="flex gap-2">
+                    <NotificationContent
+                      title={n.title}
+                      message={n.message}
+                      readAloudSize={14}
+                      translateSize={14}
+                    />
+                  </div>
                   <p className="text-xs text-muted-foreground mt-1">{timeAgo(n.created_at)}</p>
                 </div>
-                <ReadAloudButton text={`${n.title}. ${n.message}`} size={14} />
               </div>
             ))}
           </div>

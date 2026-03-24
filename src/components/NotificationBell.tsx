@@ -3,8 +3,8 @@ import { Bell } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
-import ReadAloudButton from "./ReadAloudButton";
 import { showBrowserNotification, requestNotificationPermission } from "@/lib/browser-notifications";
+import NotificationContent from "./NotificationContent";
 
 interface Notification {
   id: string;
@@ -157,13 +157,16 @@ const NotificationBell = () => {
                 >
                   <div className="flex gap-3">
                     <span className="text-lg shrink-0">{typeEmoji[n.type] || "🔔"}</span>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-senior-sm font-bold">{n.title}</p>
-                      <p className="text-senior-sm text-muted-foreground">{n.message}</p>
-                      <p className="text-xs text-muted-foreground mt-1">{timeAgo(n.created_at)}</p>
-                    </div>
-                    <div className="flex items-start gap-1">
-                      <ReadAloudButton text={`${n.title}. ${n.message}`} size={14} />
+                    <div className="flex-1 min-w-0 flex gap-2">
+                      <div className="flex-1 min-w-0">
+                        <NotificationContent
+                          title={n.title}
+                          message={n.message}
+                          readAloudSize={14}
+                          translateSize={14}
+                        />
+                        <p className="text-xs text-muted-foreground mt-1">{timeAgo(n.created_at)}</p>
+                      </div>
                       {!n.read && (
                         <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary" />
                       )}

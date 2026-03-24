@@ -15,7 +15,7 @@ const BottomNav = () => {
     { to: "/events", icon: Calendar, label: t("nav.events") },
     { to: "/skills", icon: Lightbulb, label: t("nav.skills") },
     { to: "/help", icon: MessageCircle, label: t("nav.help") },
-    { to: "/messages", icon: MessageSquare, label: "Messages" },
+    { to: "/messages", icon: MessageSquare, label: t("nav.messages") },
   ];
 
   const familyNav = [
