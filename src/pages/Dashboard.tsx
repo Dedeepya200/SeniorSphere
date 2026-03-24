@@ -78,7 +78,7 @@ const Dashboard = () => {
     const { error } = await supabase.from("daily_checkins").insert({ user_id: user.id });
     if (!error) {
       setCheckedIn(true);
-      notifyFamilyCheckin(user.id, profile?.display_name || "Your senior");
+      notifyFamilyCheckin(user.id, profile?.display_name || t("app.friend"));
     }
   };
 
@@ -89,7 +89,7 @@ const Dashboard = () => {
     { icon: BookOpen, label: t("dashboard.skillsShared"), value: stats.skills, color: "text-skills", bg: "bg-skills-bg" },
   ];
 
-  const welcomeText = `${t("dashboard.hello")}, ${profile?.display_name || "Friend"}! ${t("dashboard.whatToDo")}`;
+  const welcomeText = `${t("dashboard.hello")}, ${profile?.display_name || t("app.friend")}! ${t("dashboard.whatToDo")}`;
 
   const typeEmoji: Record<string, string> = {
     event_join: "📅",
@@ -107,11 +107,11 @@ const Dashboard = () => {
   const timeAgo = (dateStr: string) => {
     const diff = Date.now() - new Date(dateStr).getTime();
     const mins = Math.floor(diff / 60000);
-    if (mins < 1) return t("dashboard.justNow") || "Just now";
-    if (mins < 60) return `${mins}m ago`;
+    if (mins < 1) return t("app.justNow");
+    if (mins < 60) return t("app.minutesAgo").replace("{count}", String(mins));
     const hrs = Math.floor(mins / 60);
-    if (hrs < 24) return `${hrs}h ago`;
-    return `${Math.floor(hrs / 24)}d ago`;
+    if (hrs < 24) return t("app.hoursAgo").replace("{count}", String(hrs));
+    return t("app.daysAgo").replace("{count}", String(Math.floor(hrs / 24)));
   };
 
   return (
@@ -124,7 +124,7 @@ const Dashboard = () => {
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2">
-              <h1 className="text-senior-2xl font-bold">{t("dashboard.hello")}, {profile?.display_name || "Friend"}!</h1>
+              <h1 className="text-senior-2xl font-bold">{t("dashboard.hello")}, {profile?.display_name || t("app.friend")}!</h1>
               <ReadAloudButton text={welcomeText} size={20} />
             </div>
             <p className="text-senior-base text-muted-foreground">{t("dashboard.whatToDo")}</p>
@@ -244,7 +244,7 @@ const Dashboard = () => {
                 <div className="flex items-start justify-between gap-2">
                   <div>
                     <p className="text-senior-base font-bold">{h.description}</p>
-                    <p className="text-senior-sm text-muted-foreground">— {h.author_name || "Anonymous"}</p>
+                    <p className="text-senior-sm text-muted-foreground">— {h.author_name || t("app.anonymous")}</p>
                   </div>
                   <ReadAloudButton text={h.description} size={16} />
                 </div>

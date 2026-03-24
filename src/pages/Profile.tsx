@@ -90,7 +90,7 @@ const Profile = () => {
     if (error) {
       toast.error("Failed to save: " + error.message);
     } else {
-      toast.success("Profile updated!");
+      toast.success(t("profile.profileUpdated"));
       setEditing(false);
       refreshProfile();
     }
@@ -120,7 +120,7 @@ const Profile = () => {
 
   const deleteEmergencyContact = async (id: string) => {
     await supabase.from("emergency_contacts").delete().eq("id", id);
-    toast.success("Contact removed");
+    toast.success(t("profile.contactRemoved"));
     fetchEmergencyContacts();
   };
 
@@ -142,7 +142,7 @@ const Profile = () => {
                 className="text-senior-xl font-bold rounded-lg border border-input bg-background px-3 py-2 w-full"
               />
             ) : (
-              <h2 className="text-senior-xl font-bold">{profile?.display_name || "User"}</h2>
+              <h2 className="text-senior-xl font-bold">{profile?.display_name || t("app.user")}</h2>
             )}
             <div className="flex items-center gap-2 mt-1">
               {role === "moderator" && <Shield size={16} className="text-primary" />}
@@ -244,17 +244,17 @@ const Profile = () => {
           {/* Allow family view toggle */}
           <div className="flex items-center justify-between rounded-lg bg-muted/30 px-4 py-3 mb-4">
             <div>
-              <p className="text-senior-base font-semibold">Allow family to view my activity</p>
-              <p className="text-senior-sm text-muted-foreground">Family members can see your check-ins, events & help requests</p>
+              <p className="text-senior-base font-semibold">{t("profile.allowFamilyView")}</p>
+              <p className="text-senior-sm text-muted-foreground">{t("profile.allowFamilyViewDesc")}</p>
             </div>
             <button
               onClick={async () => {
                 if (!user) return;
                 const newVal = !allowFamilyView;
                 const { error } = await supabase.from("profiles").update({ allow_family_view: newVal }).eq("user_id", user.id);
-                if (error) { toast.error("Failed to update"); return; }
+                if (error) { toast.error(t("profile.updateFailed")); return; }
                 setAllowFamilyView(newVal);
-                toast.success(newVal ? "Family viewing enabled" : "Family viewing disabled");
+                toast.success(newVal ? t("profile.familyViewingEnabled") : t("profile.familyViewingDisabled"));
               }}
               className={`relative w-12 h-7 rounded-full transition-colors ${allowFamilyView ? "bg-primary" : "bg-muted"}`}
             >

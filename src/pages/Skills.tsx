@@ -136,9 +136,9 @@ const Skills = () => {
       type: formType,
     } as any);
     if (error) {
-      toast.error("Failed: " + error.message);
+      toast.error(t("skills.failed") + error.message);
     } else {
-      toast.success((formType === "offer" ? t("skills.offerSkill") : "Skill Request") + " ✓");
+      toast.success((formType === "offer" ? t("skills.offerSkill") : t("skills.requestSkill")) + " ✓");
       resetForm();
       fetchSkills();
     }
@@ -152,15 +152,15 @@ const Skills = () => {
   const requestToLearn = async (skillId: string) => {
     if (!user) return;
     const skill = skills.find(s => s.id === skillId);
-    if (skill?.user_id === user.id) { toast.info("This is your own listing!"); return; }
+    if (skill?.user_id === user.id) { toast.info(t("skills.ownListing")); return; }
     const { error } = await supabase.from("skill_learners").insert({
       skill_id: skillId,
       user_id: user.id,
       display_name: profile?.display_name || "Learner",
     });
     if (error) {
-      if (error.code === "23505") toast.info("Already joined!");
-      else toast.error("Failed: " + error.message);
+      if (error.code === "23505") toast.info(t("skills.alreadyJoined"));
+      else toast.error(t("skills.failed") + error.message);
     } else {
       const skill = skills.find(s => s.id === skillId);
       if (skill) {
@@ -174,7 +174,7 @@ const Skills = () => {
           }
         }
       }
-      toast.success("Joined ✓");
+      toast.success(t("skills.joined"));
       setLearnedIds(prev => new Set([...prev, skillId]));
       fetchSkills();
     }
@@ -217,7 +217,7 @@ const Skills = () => {
       content: text,
     });
     if (error) {
-      toast.error("Failed: " + error.message);
+      toast.error(t("skills.failed") + error.message);
     } else {
       setCommentText(prev => ({ ...prev, [skillId]: "" }));
       fetchComments(skillId);
@@ -244,7 +244,7 @@ const Skills = () => {
       context_id: skillId,
       content: greeting,
     });
-    toast.success("Message sent! Opening conversation...");
+    toast.success(t("skills.messageSent"));
     navigate(`/messages?context=skill&contextId=${skillId}&userId=${otherUserId}`);
   };
 
@@ -269,7 +269,7 @@ const Skills = () => {
             onClick={() => openForm("request")}
             className="flex items-center gap-1.5 rounded-full border-2 border-primary px-4 py-2.5 font-bold text-primary text-senior-sm"
           >
-            <HandHelping size={18} /> Request
+            <HandHelping size={18} /> {t("skills.request")}
           </button>
           <button
             onClick={() => openForm("offer")}
@@ -286,13 +286,13 @@ const Skills = () => {
           onClick={() => setActiveTab("offers")}
           className={`flex-1 rounded-full py-2.5 text-senior-base font-semibold ${activeTab === "offers" ? "bg-primary text-primary-foreground" : "bg-card border border-border"}`}
         >
-          🎓 Offered Skills
+          🎓 {t("skills.offeredTab")}
         </button>
         <button
           onClick={() => setActiveTab("requests")}
           className={`flex-1 rounded-full py-2.5 text-senior-base font-semibold ${activeTab === "requests" ? "bg-primary text-primary-foreground" : "bg-card border border-border"}`}
         >
-          🙋 Skill Requests
+          🙋 {t("skills.requestsTab")}
         </button>
       </div>
 
@@ -300,11 +300,11 @@ const Skills = () => {
       {showForm && (
         <div className="rounded-lg bg-card border border-border p-5 space-y-3">
           <h2 className="text-senior-lg font-bold">
-            {formType === "offer" ? t("skills.offerSkill") : "Request a Skill"}
+            {formType === "offer" ? t("skills.offerSkill") : t("skills.requestFormTitle")}
           </h2>
           <div className="relative">
             <input
-              placeholder={formType === "offer" ? t("skills.skillTitle") : "What skill do you want to learn?"}
+              placeholder={formType === "offer" ? t("skills.skillTitle") : t("skills.requestTitlePlaceholder")}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full rounded-lg border border-input bg-background px-4 py-3 pr-12 text-senior-base"
@@ -313,7 +313,7 @@ const Skills = () => {
           </div>
           <div className="relative">
             <textarea
-              placeholder={formType === "offer" ? t("skills.description") : "Describe what you'd like to learn..."}
+              placeholder={formType === "offer" ? t("skills.description") : t("skills.requestDescPlaceholder")}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={2}
@@ -332,14 +332,14 @@ const Skills = () => {
                   onClick={() => setIsOnline(true)}
                   className={`flex-1 rounded-lg py-2.5 text-senior-base font-semibold border ${isOnline ? "bg-primary text-primary-foreground border-primary" : "bg-background border-border"}`}
                 >
-                  🌐 Online
+                  🌐 {t("skills.online")}
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsOnline(false)}
                   className={`flex-1 rounded-lg py-2.5 text-senior-base font-semibold border ${!isOnline ? "bg-primary text-primary-foreground border-primary" : "bg-background border-border"}`}
                 >
-                  📍 Offline
+                  📍 {t("skills.offline")}
                 </button>
               </div>
 
@@ -347,7 +347,7 @@ const Skills = () => {
                 <div className="relative">
                   <Link2 size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                   <input
-                    placeholder="Session link (Zoom, Google Meet, etc.) - optional"
+                    placeholder={t("skills.sessionLinkOptional")}
                     value={link}
                     onChange={(e) => setLink(e.target.value)}
                     type="url"
@@ -358,7 +358,7 @@ const Skills = () => {
                 <div className="relative">
                   <MapPin size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                   <input
-                    placeholder="Location (e.g. Community Hall, Park)"
+                    placeholder={t("skills.locationPlaceholder")}
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     className="w-full rounded-lg border border-input bg-background pl-10 pr-4 py-3 text-senior-base"
@@ -373,14 +373,14 @@ const Skills = () => {
               onClick={resetForm}
               className="flex-1 rounded-lg border border-border py-3 font-bold text-muted-foreground text-senior-base"
             >
-              Cancel
+              {t("common.cancel")}
             </button>
             <button
               onClick={submitSkill}
               disabled={!title.trim()}
               className="flex-1 rounded-lg bg-primary py-3 font-bold text-primary-foreground text-senior-base disabled:opacity-50"
             >
-              {formType === "offer" ? t("skills.offerSkill") : "Submit Request"}
+              {formType === "offer" ? t("skills.offerSkill") : t("skills.submitRequest")}
             </button>
           </div>
         </div>
@@ -391,10 +391,10 @@ const Skills = () => {
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <Lightbulb size={44} className="mb-3 text-muted-foreground" />
           <h2 className="text-senior-lg font-bold mb-1">
-            {activeTab === "offers" ? t("skills.noSkills") : "No skill requests yet"}
+            {activeTab === "offers" ? t("skills.noSkills") : t("skills.noRequests")}
           </h2>
           <p className="text-muted-foreground text-senior-base">
-            {activeTab === "offers" ? t("skills.noSkillsDesc") : "Be the first to request a skill you'd like to learn!"}
+            {activeTab === "offers" ? t("skills.noSkillsDesc") : t("skills.noRequestsDesc")}
           </p>
         </div>
       ) : (
@@ -412,7 +412,7 @@ const Skills = () => {
                 <div className={`px-5 py-2 flex items-center gap-2 text-senior-sm font-bold uppercase tracking-wide ${
                   isRequest ? "bg-accent/30 text-accent-foreground" : "bg-skills-bg text-skills"
                 }`}>
-                  {isRequest ? "🙋 Skill Request" : "🎓 Skill Offered"}
+                  {isRequest ? `🙋 ${t("skills.requestBadge")}` : `🎓 ${t("skills.offeredBadge")}`}
                 </div>
 
                 <div className="p-5">
@@ -424,7 +424,7 @@ const Skills = () => {
                       <div>
                         <p className="font-bold text-senior-lg">{skill.title}</p>
                         <p className="text-senior-sm text-muted-foreground">
-                          {isRequest ? "Requested by" : t("skills.taughtBy")} {skill.teacher_name}
+                          {isRequest ? t("skills.requestedBy") : t("skills.taughtBy")} {skill.teacher_name}
                         </p>
                       </div>
                     </div>
@@ -463,12 +463,12 @@ const Skills = () => {
                   <div className="space-y-1.5 mb-3">
                     {skill.is_online && skill.link && (isOwner || hasJoined) && (
                       <a href={skill.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-senior-base text-primary font-semibold hover:underline">
-                        <ExternalLink size={16} /> {isOwner ? "Open Link" : "Join Online"}
+                        <ExternalLink size={16} /> {isOwner ? t("skills.openLink") : t("skills.joinOnline")}
                       </a>
                     )}
                     {skill.is_online && skill.link && !isOwner && !hasJoined && (
                       <p className="flex items-center gap-1.5 text-senior-sm text-muted-foreground">
-                        <Link2 size={14} /> Online session — join to get the link
+                        <Link2 size={14} /> {t("skills.joinToGetLink")}
                       </p>
                     )}
                     {!skill.is_online && skill.location && (
@@ -478,12 +478,12 @@ const Skills = () => {
                     )}
                     {skill.is_online && !skill.link && (
                       <p className="flex items-center gap-1.5 text-senior-sm text-muted-foreground">
-                        <Link2 size={14} /> Online
+                        <Link2 size={14} /> {t("skills.online")}
                       </p>
                     )}
                     {!skill.is_online && !skill.location && (
                       <p className="flex items-center gap-1.5 text-senior-sm text-muted-foreground">
-                        <MapPin size={14} /> In-person
+                        <MapPin size={14} /> {t("skills.inPerson")}
                       </p>
                     )}
                   </div>
@@ -491,22 +491,22 @@ const Skills = () => {
                   {/* Action row */}
                   <div className="flex items-center justify-between mb-2">
                     <span className="flex items-center gap-1.5 text-senior-sm text-muted-foreground">
-                      <Users size={16} /> {skill.learner_count || 0} {isRequest ? "interested" : t("skills.learners")}
+                      <Users size={16} /> {skill.learner_count || 0} {isRequest ? t("skills.interested") : t("skills.learners")}
                     </span>
                     {isOwner ? (
                       <span className="rounded-lg bg-muted px-5 py-2.5 text-senior-base font-semibold text-muted-foreground">
-                        {isRequest ? "Your request" : "Your skill"}
+                        {isRequest ? t("skills.yourRequest") : t("skills.yourSkill")}
                       </span>
                     ) : hasJoined ? (
                       <span className="rounded-lg bg-skills-bg px-5 py-2.5 text-senior-base font-semibold text-skills">
-                        ✓ {isRequest ? "Offered to help" : t("skills.learning")}
+                        ✓ {isRequest ? t("skills.offeredToHelp") : t("skills.learning")}
                       </span>
                     ) : (
                       <button
                         onClick={() => requestToLearn(skill.id)}
                         className="rounded-lg border-2 border-primary px-5 py-2.5 text-senior-base font-bold text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
                       >
-                        {isRequest ? "I can teach this!" : t("skills.learnThis")}
+                        {isRequest ? t("skills.teachThis") : t("skills.learnThis")}
                       </button>
                     )}
                   </div>

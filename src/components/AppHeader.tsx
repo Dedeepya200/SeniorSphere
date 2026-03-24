@@ -23,7 +23,7 @@ const AppHeader = () => {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Heart size={24} className="text-primary fill-primary" />
-          <span className="text-senior-lg font-bold text-foreground">SeniorSphere</span>
+          <span className="text-senior-lg font-bold text-foreground">{t("app.name")}</span>
           {roleBadge && (
             <span className="ml-2 rounded-full bg-primary/10 px-3 py-0.5 text-xs font-bold text-primary uppercase tracking-wide">
               {roleBadge}
@@ -35,14 +35,14 @@ const AppHeader = () => {
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="flex items-center justify-center rounded-lg border border-border p-2 text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
-              title="Toggle theme"
+              title={t("header.toggleTheme")}
             >
               {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
             </button>
             <button
               onClick={() => setLanguage(language === "en" ? "te" : "en")}
               className="flex items-center gap-1.5 rounded-lg border border-border px-2.5 py-2 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
-              title="Switch language"
+              title={t("header.switchLanguage")}
             >
               <Globe size={14} />
               <span className="hidden sm:inline">{t("lang.switch")}</span>
@@ -52,14 +52,14 @@ const AppHeader = () => {
                 onClick={async () => {
                   const installed = await install();
                   if (!installed) {
-                    toast.info("Install prompt dismissed.");
+                    toast.info(t("header.installDismissed"));
                   }
                 }}
                 className="flex items-center gap-1.5 rounded-lg border border-border px-2.5 py-2 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
-                title="Install app"
+                title={t("header.installApp")}
               >
                 <Download size={14} />
-                <span className="hidden sm:inline">Install</span>
+                <span className="hidden sm:inline">{t("header.install")}</span>
               </button>
             )}
             <NotificationBell />

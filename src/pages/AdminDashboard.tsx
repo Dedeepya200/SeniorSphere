@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type CommunityRequest = {
   id: string;
@@ -50,6 +51,7 @@ const cardClass = "rounded-[28px] border border-[#d8d0c6] bg-white p-6 shadow-[0
 const innerCardClass = "rounded-[24px] border border-[#d8d0c6] bg-white p-6";
 
 const AdminDashboard = () => {
+  const { t } = useLanguage();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [totalUsers, setTotalUsers] = useState(0);
@@ -86,9 +88,9 @@ const AdminDashboard = () => {
     try {
       setRefreshing(true);
       await loadDashboard();
-      if (showToast) toast.success("Dashboard refreshed.");
+      if (showToast) toast.success(t("admin.refreshed"));
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Failed to load admin dashboard.";
+      const message = error instanceof Error ? error.message : t("admin.loadFailed");
       toast.error(message);
     } finally {
       setRefreshing(false);
@@ -104,10 +106,10 @@ const AdminDashboard = () => {
     try {
       const { error } = await supabase.rpc("approve_community_request", { _request_id: requestId });
       if (error) throw error;
-      toast.success("Community approved and moderator created.");
+      toast.success(t("admin.communityApproved"));
       await refresh();
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Could not approve request.";
+      const message = error instanceof Error ? error.message : t("admin.approveFailed");
       toast.error(message);
     }
   };
@@ -116,10 +118,10 @@ const AdminDashboard = () => {
     try {
       const { error } = await supabase.rpc("reject_community_request", { _request_id: requestId });
       if (error) throw error;
-      toast.success("Community request rejected.");
+      toast.success(t("admin.communityRejected"));
       await refresh();
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Could not reject request.";
+      const message = error instanceof Error ? error.message : t("admin.rejectFailed");
       toast.error(message);
     }
   };
@@ -132,10 +134,10 @@ const AdminDashboard = () => {
         _moderator_user_id: moderatorUserId,
       });
       if (error) throw error;
-      toast.success("Moderator reassigned.");
+      toast.success(t("admin.moderatorReassigned"));
       await refresh();
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Could not reassign moderator.";
+      const message = error instanceof Error ? error.message : t("admin.reassignFailed");
       toast.error(message);
     } finally {
       setReassigningCommunityId(null);
@@ -149,10 +151,10 @@ const AdminDashboard = () => {
         _community_id: communityId,
       });
       if (error) throw error;
-      toast.success("Replacement moderator created.");
+      toast.success(t("admin.replacementCreated"));
       await refresh();
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Could not create replacement moderator.";
+      const message = error instanceof Error ? error.message : t("admin.replacementFailed");
       toast.error(message);
     } finally {
       setReassigningCommunityId(null);
@@ -176,10 +178,10 @@ const AdminDashboard = () => {
         ? ` Moderator account deleted for ${result.retired_moderator_email}.`
         : "";
 
-      toast.success(`Deleted ${result?.deleted_community_name || community.name}.${moderatorMessage}`);
+      toast.success(t("admin.communityDeleted").replace("{community}", result?.deleted_community_name || community.name) + moderatorMessage);
       await refresh();
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Could not delete community.";
+      const message = error instanceof Error ? error.message : t("admin.deleteFailed");
       toast.error(message);
     } finally {
       setDeletingCommunityId(null);
@@ -200,14 +202,14 @@ const AdminDashboard = () => {
   const copyText = async (value: string, label: string) => {
     try {
       await navigator.clipboard.writeText(value);
-      toast.success(`${label} copied.`);
+      toast.success(t("admin.copied").replace("{label}", label));
     } catch {
-      toast.error(`Could not copy ${label.toLowerCase()}.`);
+      toast.error(t("admin.copyFailed").replace("{label}", label.toLowerCase()));
     }
   };
 
   if (loading) {
-    return <div className="py-20 text-center text-senior-base text-muted-foreground">Loading admin dashboard...</div>;
+    return <div className="py-20 text-center text-senior-base text-muted-foreground">{t("admin.loading")}</div>;
   }
 
   return (
@@ -218,8 +220,8 @@ const AdminDashboard = () => {
             <Shield size={42} strokeWidth={1.8} />
           </div>
           <div>
-            <h1 className="text-4xl font-extrabold tracking-[-0.03em] text-[#332721] sm:text-5xl">Admin Dashboard</h1>
-            <p className="mt-2 text-lg text-[#7e7068] sm:text-xl">Manage communities, users, and platform settings</p>
+            <h1 className="text-4xl font-extrabold tracking-[-0.03em] text-[#332721] sm:text-5xl">{t("admin.title")}</h1>
+            <p className="mt-2 text-lg text-[#7e7068] sm:text-xl">{t("admin.subtitle")}</p>
           </div>
         </div>
         <button
@@ -229,15 +231,15 @@ const AdminDashboard = () => {
           className="inline-flex items-center gap-2 self-start rounded-2xl border border-[#d8d0c6] bg-white px-4 py-3 text-sm font-semibold text-[#5d4e47] disabled:opacity-60"
         >
           <RefreshCw size={16} className={refreshing ? "animate-spin" : ""} />
-          Refresh
+          {t("admin.refresh")}
         </button>
       </section>
 
       <section className="grid gap-4 lg:grid-cols-3">
         {[
-          { label: "Total Communities", value: totalCommunities, icon: MapPin, tint: "text-[#3b8b72]" },
-          { label: "Total Users", value: totalUsers, icon: Users, tint: "text-[#3b8b72]" },
-          { label: "Pending Requests", value: requests.length, icon: UserRound, tint: "text-[#de9a16]" },
+          { label: t("admin.totalCommunities"), value: totalCommunities, icon: MapPin, tint: "text-[#3b8b72]" },
+          { label: t("admin.totalUsers"), value: totalUsers, icon: Users, tint: "text-[#3b8b72]" },
+          { label: t("admin.pendingRequests"), value: requests.length, icon: UserRound, tint: "text-[#de9a16]" },
         ].map(({ label, value, icon: Icon, tint }) => (
           <div key={label} className={cardClass}>
             <div className="flex items-center gap-6">
@@ -257,14 +259,14 @@ const AdminDashboard = () => {
         <div className="mb-6 flex items-center gap-3">
           <MapPin size={30} className="text-[#3b8b72]" strokeWidth={2} />
           <div>
-            <h2 className="text-2xl font-extrabold tracking-[-0.03em]">Community Requests</h2>
+            <h2 className="text-2xl font-extrabold tracking-[-0.03em]">{t("admin.communityRequestsTitle")}</h2>
           </div>
         </div>
 
         <div className="space-y-4">
           {requests.length === 0 ? (
             <div className={innerCardClass}>
-              <p className="text-base text-[#7a6b63]">No pending community requests.</p>
+              <p className="text-base text-[#7a6b63]">{t("admin.noPendingRequests")}</p>
             </div>
           ) : (
             requests.map((request) => {
@@ -276,7 +278,7 @@ const AdminDashboard = () => {
                     <p className="mt-2 text-xl text-[#7a6b63]">{request.area}, {request.city}</p>
                     <div className="mt-4 flex items-center gap-2 text-lg text-[#7a6b63]">
                       <Users size={20} />
-                      <span>{request.request_count} people requested</span>
+                      <span>{t("admin.peopleRequested").replace("{count}", String(request.request_count))}</span>
                     </div>
                   </div>
 
@@ -287,7 +289,7 @@ const AdminDashboard = () => {
                         onClick={() => approveRequest(request.id)}
                         className="rounded-2xl bg-[#3b8b72] px-6 py-3 text-lg font-bold text-white"
                       >
-                        Approve
+                        {t("admin.approve")}
                       </button>
                     )}
                     <button
@@ -295,7 +297,7 @@ const AdminDashboard = () => {
                       onClick={() => rejectRequest(request.id)}
                       className="rounded-2xl border border-[#d8d0c6] bg-white px-6 py-3 text-lg font-bold text-[#6d5f58]"
                     >
-                      Reject
+                      {t("admin.reject")}
                     </button>
                   </div>
                 </div>

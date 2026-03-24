@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { LanguageProvider } from "@/contexts/LanguageContext";
+import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import AppHeader from "./components/AppHeader";
 import SideNav from "./components/SideNav";
 import BottomNav from "./components/BottomNav";
@@ -27,10 +27,11 @@ const queryClient = new QueryClient();
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
+  const { t } = useLanguage();
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p className="text-senior-lg text-muted-foreground">Loading...</p>
+        <p className="text-senior-lg text-muted-foreground">{t("app.loading")}</p>
       </div>
     );
   }

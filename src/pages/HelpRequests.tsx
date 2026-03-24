@@ -98,7 +98,7 @@ const HelpRequests = () => {
     const content = desc.trim();
     const moderationResult = await moderateContent(content);
     if (moderationResult.flagged) {
-      toast.error(`Request blocked: ${moderationResult.reason || "Content requires review"}`);
+      toast.error(t("help.requestBlocked").replace("{reason}", moderationResult.reason || "Content requires review"));
       return;
     }
 
@@ -131,7 +131,7 @@ const HelpRequests = () => {
   const offerHelp = async (requestId: string) => {
     if (!user) return;
     const request = requests.find(r => r.id === requestId);
-    if (request?.user_id === user.id) { toast.info("This is your own request!"); return; }
+    if (request?.user_id === user.id) { toast.info(t("help.ownRequest")); return; }
     const { error } = await supabase.from("help_volunteers").insert({
       help_request_id: requestId,
       user_id: user.id,
@@ -211,7 +211,7 @@ const HelpRequests = () => {
             <input
               value={onBehalfName}
               onChange={(e) => setOnBehalfName(e.target.value)}
-              placeholder="On behalf of (senior's name)"
+              placeholder={t("help.onBehalfPlaceholder")}
               className="w-full rounded-lg border border-input bg-background px-4 py-3 text-senior-base"
             />
           )}
@@ -300,7 +300,7 @@ const HelpRequests = () => {
                       }}
                       className="w-full mt-2 flex items-center justify-center gap-2 rounded-lg border border-primary bg-primary/10 py-3 font-bold text-primary text-senior-base"
                     >
-                      <MessageSquare size={18} /> Message Requester
+                      <MessageSquare size={18} /> {t("help.messageRequester")}
                     </button>
                   )}
                 </div>

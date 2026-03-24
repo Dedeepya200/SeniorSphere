@@ -8,6 +8,13 @@ const translations: Record<Language, Record<string, string>> = {
     "app.name": "SeniorSphere",
     "app.tagline": "Connect with your community",
     "app.loading": "Loading...",
+    "app.user": "User",
+    "app.friend": "Friend",
+    "app.anonymous": "Anonymous",
+    "app.justNow": "Just now",
+    "app.minutesAgo": "{count}m ago",
+    "app.hoursAgo": "{count}h ago",
+    "app.daysAgo": "{count}d ago",
 
     // Roles
     "role.senior": "Senior Citizen",
@@ -185,10 +192,28 @@ const translations: Record<Language, Record<string, string>> = {
     // Language
     "lang.switch": "తెలుగు",
 
+    // Header
+    "header.toggleTheme": "Toggle theme",
+    "header.switchLanguage": "Switch language",
+    "header.install": "Install",
+    "header.installApp": "Install app",
+    "header.installDismissed": "Install prompt dismissed.",
+
     // Notifications
     "notifications.title": "Notifications",
     "notifications.markAllRead": "Mark all read",
     "notifications.noNotifications": "No notifications yet",
+
+    // Messages
+    "messages.loading": "Loading...",
+    "messages.loginRequired": "Please log in to view messages.",
+    "messages.empty": "No messages yet.",
+    "messages.emptyHello": "No messages yet. Say hello!",
+    "messages.emptyHint": "Messages will appear when you connect with someone through skills, events, or help requests.",
+    "messages.typePlaceholder": "Type a message...",
+    "messages.contextSkill": "Skill",
+    "messages.contextHelpRequest": "Help Request",
+    "messages.contextEvent": "Event",
 
     // Speech
     "speech.readAloud": "Read aloud",
@@ -201,12 +226,106 @@ const translations: Record<Language, Record<string, string>> = {
     "common.save": "Save",
     "common.saved": "Saved!",
     "common.cancel": "Cancel",
+
+    // Not found
+    "notFound.message": "Oops! Page not found",
+    "notFound.home": "Return to Home",
+
+    // Admin
+    "admin.loading": "Loading admin dashboard...",
+    "admin.refreshed": "Dashboard refreshed.",
+    "admin.loadFailed": "Failed to load admin dashboard.",
+    "admin.communityApproved": "Community approved and moderator created.",
+    "admin.approveFailed": "Could not approve request.",
+    "admin.communityRejected": "Community request rejected.",
+    "admin.rejectFailed": "Could not reject request.",
+    "admin.moderatorReassigned": "Moderator reassigned.",
+    "admin.reassignFailed": "Could not reassign moderator.",
+    "admin.replacementCreated": "Replacement moderator created.",
+    "admin.replacementFailed": "Could not create replacement moderator.",
+    "admin.communityDeleted": "Deleted {community}.",
+    "admin.deleteFailed": "Could not delete community.",
+    "admin.copied": "{label} copied.",
+    "admin.copyFailed": "Could not copy {label}.",
+    "admin.title": "Admin Dashboard",
+    "admin.subtitle": "Manage communities, users, and platform settings",
+    "admin.refresh": "Refresh",
+    "admin.totalCommunities": "Total Communities",
+    "admin.totalUsers": "Total Users",
+    "admin.pendingRequests": "Pending Requests",
+    "admin.communityRequestsTitle": "Community Requests",
+    "admin.noPendingRequests": "No pending community requests.",
+    "admin.peopleRequested": "{count} people requested",
+    "admin.approve": "Approve",
+    "admin.reject": "Reject",
+
+    // Skills
+    "skills.requestSkill": "Skill Request",
+    "skills.joined": "Joined ✓",
+    "skills.failed": "Failed: ",
+    "skills.ownListing": "This is your own listing!",
+    "skills.alreadyJoined": "Already joined!",
+    "skills.request": "Request",
+    "skills.offeredTab": "Offered Skills",
+    "skills.requestsTab": "Skill Requests",
+    "skills.requestFormTitle": "Request a Skill",
+    "skills.requestTitlePlaceholder": "What skill do you want to learn?",
+    "skills.requestDescPlaceholder": "Describe what you'd like to learn...",
+    "skills.submitRequest": "Submit Request",
+    "skills.noRequests": "No skill requests yet",
+    "skills.noRequestsDesc": "Be the first to request a skill you'd like to learn!",
+    "skills.requestBadge": "Skill Request",
+    "skills.offeredBadge": "Skill Offered",
+    "skills.requestedBy": "Requested by",
+    "skills.openLink": "Open Link",
+    "skills.joinOnline": "Join Online",
+    "skills.joinToGetLink": "Online session - join to get the link",
+    "skills.online": "Online",
+    "skills.offline": "Offline",
+    "skills.inPerson": "In-person",
+    "skills.interested": "interested",
+    "skills.yourRequest": "Your request",
+    "skills.yourSkill": "Your skill",
+    "skills.offeredToHelp": "Offered to help",
+    "skills.teachThis": "I can teach this!",
+    "skills.locationPlaceholder": "Location (e.g. Community Hall, Park)",
+    "skills.sessionLinkOptional": "Session link (Zoom, Google Meet, etc.) - optional",
+    "skills.messageSent": "Message sent! Opening conversation...",
+
+    // Login
+    "login.loadCommunitiesFailed": "Failed to load communities.",
+    "login.selectOrRequest": "Select an existing community or submit a valid community request.",
+    "login.accountCreated": "Account created. You can now log in.",
+    "login.accountAndRequest": "Account created and community request submitted.",
+    "login.authFailed": "Authentication failed.",
+
+    // Help
+    "help.requestBlocked": "Request blocked: {reason}",
+    "help.ownRequest": "This is your own request!",
+    "help.onBehalfPlaceholder": "On behalf of (senior's name)",
+    "help.messageRequester": "Message Requester",
+
+    // Profile
+    "profile.profileUpdated": "Profile updated!",
+    "profile.contactRemoved": "Contact removed",
+    "profile.allowFamilyView": "Allow family to view my activity",
+    "profile.allowFamilyViewDesc": "Family members can see your check-ins, events & help requests",
+    "profile.updateFailed": "Failed to update",
+    "profile.familyViewingEnabled": "Family viewing enabled",
+    "profile.familyViewingDisabled": "Family viewing disabled",
   },
   te: {
     // App
     "app.name": "సీనియర్‌స్ఫియర్",
     "app.tagline": "మీ సమాజంతో కనెక్ట్ అవ్వండి",
     "app.loading": "లోడ్ అవుతోంది...",
+    "app.user": "వినియోగదారు",
+    "app.friend": "మిత్రుడు",
+    "app.anonymous": "అజ్ఞాత",
+    "app.justNow": "ఇప్పుడే",
+    "app.minutesAgo": "{count}ని క్రితం",
+    "app.hoursAgo": "{count}గం క్రితం",
+    "app.daysAgo": "{count}రోజుల క్రితం",
 
     // Roles
     "role.senior": "సీనియర్ సిటిజన్",
@@ -384,10 +503,28 @@ const translations: Record<Language, Record<string, string>> = {
     // Language
     "lang.switch": "English",
 
+    // Header
+    "header.toggleTheme": "థీమ్ మార్చు",
+    "header.switchLanguage": "భాష మార్చు",
+    "header.install": "ఇన్‌స్టాల్",
+    "header.installApp": "యాప్ ఇన్‌స్టాల్ చేయి",
+    "header.installDismissed": "ఇన్‌స్టాల్ ప్రాంప్ట్ మూసివేయబడింది.",
+
     // Notifications
     "notifications.title": "నోటిఫికేషన్‌లు",
     "notifications.markAllRead": "అన్నీ చదివినట్లు గుర్తించు",
     "notifications.noNotifications": "ఇంకా నోటిఫికేషన్‌లు లేవు",
+
+    // Messages
+    "messages.loading": "లోడ్ అవుతోంది...",
+    "messages.loginRequired": "సందేశాలు చూడటానికి లాగిన్ చేయండి.",
+    "messages.empty": "ఇంకా సందేశాలు లేవు.",
+    "messages.emptyHello": "ఇంకా సందేశాలు లేవు. హాయ్ చెప్పండి!",
+    "messages.emptyHint": "నైపుణ్యాలు, ఈవెంట్‌లు లేదా సహాయ అభ్యర్థనల ద్వారా మీరు ఎవరితోనైనా కనెక్ట్ అయినప్పుడు సందేశాలు ఇక్కడ కనిపిస్తాయి.",
+    "messages.typePlaceholder": "సందేశం టైప్ చేయండి...",
+    "messages.contextSkill": "నైపుణ్యం",
+    "messages.contextHelpRequest": "సహాయ అభ్యర్థన",
+    "messages.contextEvent": "ఈవెంట్",
 
     // Speech
     "speech.readAloud": "చదివి వినిపించు",
@@ -400,6 +537,93 @@ const translations: Record<Language, Record<string, string>> = {
     "common.save": "సేవ్ చేయి",
     "common.saved": "సేవ్ అయింది!",
     "common.cancel": "రద్దు",
+
+    // Not found
+    "notFound.message": "అయ్యో! పేజీ దొరకలేదు",
+    "notFound.home": "హోమ్‌కి వెళ్ళండి",
+
+    // Admin
+    "admin.loading": "అడ్మిన్ డాష్‌బోర్డ్ లోడ్ అవుతోంది...",
+    "admin.refreshed": "డాష్‌బోర్డ్ రిఫ్రెష్ అయింది.",
+    "admin.loadFailed": "అడ్మిన్ డాష్‌బోర్డ్ లోడ్ చేయలేకపోయాము.",
+    "admin.communityApproved": "సమాజం ఆమోదించబడింది మరియు మోడరేటర్ సృష్టించబడ్డారు.",
+    "admin.approveFailed": "అభ్యర్థనను ఆమోదించలేకపోయాము.",
+    "admin.communityRejected": "సమాజ అభ్యర్థన తిరస్కరించబడింది.",
+    "admin.rejectFailed": "అభ్యర్థనను తిరస్కరించలేకపోయాము.",
+    "admin.moderatorReassigned": "మోడరేటర్ మళ్లీ కేటాయించబడ్డారు.",
+    "admin.reassignFailed": "మోడరేటర్‌ను మళ్లీ కేటాయించలేకపోయాము.",
+    "admin.replacementCreated": "ప్రత్యామ్నాయ మోడరేటర్ సృష్టించబడ్డారు.",
+    "admin.replacementFailed": "ప్రత్యామ్నాయ మోడరేటర్‌ను సృష్టించలేకపోయాము.",
+    "admin.communityDeleted": "{community} తొలగించబడింది.",
+    "admin.deleteFailed": "సమాజాన్ని తొలగించలేకపోయాము.",
+    "admin.copied": "{label} కాపీ అయింది.",
+    "admin.copyFailed": "{label} కాపీ చేయలేకపోయాము.",
+    "admin.title": "అడ్మిన్ డాష్‌బోర్డ్",
+    "admin.subtitle": "సమాజాలు, వినియోగదారులు మరియు ప్లాట్‌ఫారమ్ సెట్టింగ్‌లను నిర్వహించండి",
+    "admin.refresh": "రిఫ్రెష్",
+    "admin.totalCommunities": "మొత్తం సమాజాలు",
+    "admin.totalUsers": "మొత్తం వినియోగదారులు",
+    "admin.pendingRequests": "పెండింగ్ అభ్యర్థనలు",
+    "admin.communityRequestsTitle": "సమాజ అభ్యర్థనలు",
+    "admin.noPendingRequests": "పెండింగ్ సమాజ అభ్యర్థనలు లేవు.",
+    "admin.peopleRequested": "{count} మంది అభ్యర్థించారు",
+    "admin.approve": "ఆమోదించు",
+    "admin.reject": "తిరస్కరించు",
+
+    // Skills
+    "skills.requestSkill": "నైపుణ్య అభ్యర్థన",
+    "skills.joined": "చేరారు ✓",
+    "skills.failed": "విఫలమైంది: ",
+    "skills.ownListing": "ఇది మీ స్వంత లిస్టింగ్!",
+    "skills.alreadyJoined": "ఇప్పటికే చేరారు!",
+    "skills.request": "అభ్యర్థన",
+    "skills.offeredTab": "అందించిన నైపుణ్యాలు",
+    "skills.requestsTab": "నైపుణ్య అభ్యర్థనలు",
+    "skills.requestFormTitle": "నైపుణ్యం అభ్యర్థించండి",
+    "skills.requestTitlePlaceholder": "మీరు ఏ నైపుణ్యం నేర్చుకోవాలనుకుంటున్నారు?",
+    "skills.requestDescPlaceholder": "మీరు ఏమి నేర్చుకోవాలనుకుంటున్నారో వివరించండి...",
+    "skills.submitRequest": "అభ్యర్థన సమర్పించు",
+    "skills.noRequests": "ఇంకా నైపుణ్య అభ్యర్థనలు లేవు",
+    "skills.noRequestsDesc": "మీరు నేర్చుకోవాలనుకునే నైపుణ్యాన్ని ముందుగా అభ్యర్థించండి!",
+    "skills.requestBadge": "నైపుణ్య అభ్యర్థన",
+    "skills.offeredBadge": "అందించిన నైపుణ్యం",
+    "skills.requestedBy": "అభ్యర్థించిన వారు",
+    "skills.openLink": "లింక్ తెరువు",
+    "skills.joinOnline": "ఆన్‌లైన్‌లో చేరండి",
+    "skills.joinToGetLink": "ఆన్‌లైన్ సెషన్ - లింక్ పొందడానికి ముందుగా చేరండి",
+    "skills.online": "ఆన్‌లైన్",
+    "skills.offline": "ఆఫ్‌లైన్",
+    "skills.inPerson": "ప్రత్యక్షంగా",
+    "skills.interested": "ఆసక్తి ఉన్నవారు",
+    "skills.yourRequest": "మీ అభ్యర్థన",
+    "skills.yourSkill": "మీ నైపుణ్యం",
+    "skills.offeredToHelp": "సహాయం చేయడానికి ముందుకు వచ్చారు",
+    "skills.teachThis": "నేను ఇది నేర్పగలను!",
+    "skills.locationPlaceholder": "ప్రదేశం (ఉదా. కమ్యూనిటీ హాల్, పార్క్)",
+    "skills.sessionLinkOptional": "సెషన్ లింక్ (జూమ్, గూగుల్ మీట్ మొదలైనవి) - ఐచ్ఛికం",
+    "skills.messageSent": "సందేశం పంపబడింది! సంభాషణ తెరుస్తోంది...",
+
+    // Login
+    "login.loadCommunitiesFailed": "సమాజాలను లోడ్ చేయలేకపోయాము.",
+    "login.selectOrRequest": "ఉన్న సమాజాన్ని ఎంచుకోండి లేదా చెల్లుబాటు అయ్యే సమాజ అభ్యర్థనను సమర్పించండి.",
+    "login.accountCreated": "ఖాతా సృష్టించబడింది. మీరు ఇప్పుడు లాగిన్ చేయవచ్చు.",
+    "login.accountAndRequest": "ఖాతా సృష్టించబడింది మరియు సమాజ అభ్యర్థన సమర్పించబడింది.",
+    "login.authFailed": "ప్రమాణీకరణ విఫలమైంది.",
+
+    // Help
+    "help.requestBlocked": "అభ్యర్థన నిలిపివేయబడింది: {reason}",
+    "help.ownRequest": "ఇది మీ స్వంత అభ్యర్థన!",
+    "help.onBehalfPlaceholder": "తరఫున (సీనియర్ పేరు)",
+    "help.messageRequester": "అభ్యర్థించిన వ్యక్తికి సందేశం",
+
+    // Profile
+    "profile.profileUpdated": "ప్రొఫైల్ అప్‌డేట్ అయింది!",
+    "profile.contactRemoved": "సంప్రదింపు తొలగించబడింది",
+    "profile.allowFamilyView": "నా కార్యకలాపాలు కుటుంబానికి చూపించు",
+    "profile.allowFamilyViewDesc": "కుటుంబ సభ్యులు మీ చెక్-ఇన్‌లు, ఈవెంట్‌లు మరియు సహాయ అభ్యర్థనలను చూడగలరు",
+    "profile.updateFailed": "అప్‌డేట్ చేయలేకపోయాము",
+    "profile.familyViewingEnabled": "కుటుంబ వీక్షణ ప్రారంభించబడింది",
+    "profile.familyViewingDisabled": "కుటుంబ వీక్షణ నిలిపివేయబడింది",
   },
 };
 

@@ -87,7 +87,7 @@ const Messages = () => {
         .in("user_id", otherIds);
       const nameMap = new Map(profiles?.map(p => [p.user_id, p.display_name]) || []);
       for (const convo of convoMap.values()) {
-        convo.other_user_name = nameMap.get(convo.other_user_id) || "User";
+        convo.other_user_name = nameMap.get(convo.other_user_id) || t("app.user");
       }
     }
 
@@ -100,21 +100,21 @@ const Messages = () => {
       const { data: skills } = await supabase.from("skills").select("id, title").in("id", skillIds);
       const titleMap = new Map(skills?.map(s => [s.id, s.title]) || []);
       for (const c of convoMap.values()) {
-        if (c.context_type === "skill") c.context_title = titleMap.get(c.context_id) || "Skill";
+        if (c.context_type === "skill") c.context_title = titleMap.get(c.context_id) || t("messages.contextSkill");
       }
     }
     if (helpIds.length > 0) {
       const { data: helps } = await supabase.from("help_requests").select("id, description").in("id", helpIds);
       const titleMap = new Map(helps?.map(h => [h.id, h.description.slice(0, 40)]) || []);
       for (const c of convoMap.values()) {
-        if (c.context_type === "help_request") c.context_title = titleMap.get(c.context_id) || "Help Request";
+        if (c.context_type === "help_request") c.context_title = titleMap.get(c.context_id) || t("messages.contextHelpRequest");
       }
     }
     if (eventIds.length > 0) {
       const { data: evts } = await supabase.from("events").select("id, title").in("id", eventIds);
       const titleMap = new Map(evts?.map(e => [e.id, e.title]) || []);
       for (const c of convoMap.values()) {
-        if (c.context_type === "event") c.context_title = titleMap.get(c.context_id) || "Event";
+        if (c.context_type === "event") c.context_title = titleMap.get(c.context_id) || t("messages.contextEvent");
       }
     }
 
@@ -235,14 +235,14 @@ const Messages = () => {
   const timeAgo = (dateStr: string) => {
     const diff = Date.now() - new Date(dateStr).getTime();
     const mins = Math.floor(diff / 60000);
-    if (mins < 1) return "Now";
-    if (mins < 60) return `${mins}m`;
+    if (mins < 1) return t("app.justNow");
+    if (mins < 60) return t("app.minutesAgo").replace("{count}", String(mins));
     const hrs = Math.floor(mins / 60);
-    if (hrs < 24) return `${hrs}h`;
-    return `${Math.floor(hrs / 24)}d`;
+    if (hrs < 24) return t("app.hoursAgo").replace("{count}", String(hrs));
+    return t("app.daysAgo").replace("{count}", String(Math.floor(hrs / 24)));
   };
 
-  if (!user) return <div className="p-6 text-center text-muted-foreground">Please log in to view messages.</div>;
+  if (!user) return <div className="p-6 text-center text-muted-foreground">{t("messages.loginRequired")}</div>;
 
   // Chat view
   if (activeConvo) {
@@ -264,7 +264,7 @@ const Messages = () => {
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
           {messages.length === 0 && (
-            <p className="text-center text-muted-foreground text-senior-sm py-8">No messages yet. Say hello! 👋</p>
+            <p className="text-center text-muted-foreground text-senior-sm py-8">{t("messages.emptyHello")} 👋</p>
           )}
           {messages.map(msg => {
             const isMine = msg.sender_id === user.id;
@@ -323,7 +323,7 @@ const Messages = () => {
             value={newMsg}
             onChange={(e) => setNewMsg(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-            placeholder="Type a message..."
+            placeholder={t("messages.typePlaceholder")}
             className="flex-1 rounded-full border border-border bg-background px-4 py-2.5 text-senior-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
           />
           <button
@@ -347,13 +347,13 @@ const Messages = () => {
       </h1>
 
       {loading ? (
-        <div className="text-center py-12 text-muted-foreground">Loading...</div>
+        <div className="text-center py-12 text-muted-foreground">{t("messages.loading")}</div>
       ) : conversations.length === 0 ? (
         <div className="text-center py-12">
           <MessageSquare size={40} className="mx-auto mb-3 text-muted-foreground" />
-          <p className="text-senior-base text-muted-foreground">No messages yet.</p>
+          <p className="text-senior-base text-muted-foreground">{t("messages.empty")}</p>
           <p className="text-senior-sm text-muted-foreground mt-1">
-            Messages will appear when you connect with someone through skills, events, or help requests.
+            {t("messages.emptyHint")}
           </p>
         </div>
       ) : (
